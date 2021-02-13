@@ -1,5 +1,5 @@
 import * as React from "react"
-import {View,Text,FlatList,TouchableOpacity} from "react-native"
+import {View,Text,FlatList,TouchableOpacity,StyleSheet} from "react-native"
 import {ListItem} from "react-native-elements"
 import db from "../Config"
 
@@ -7,7 +7,7 @@ export default class BookDonateScreen extends React.Component{
 
     constructor(){
         super();
-        this.setState={
+        this.state={
             requestBookList:[]
         }
         this.requestRef=null
@@ -33,7 +33,11 @@ export default class BookDonateScreen extends React.Component{
                 subtitle={item.reason_to_request}
                 titleStyle={{color:"black",fontWeight:"bold"}}
                 rightElement={
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            this.props.navigation.navigate("RecieverDetails",{"details":item})
+                        }}
+                    >
                         <Text>Donate</Text>
                     </TouchableOpacity>
                 }
@@ -47,15 +51,15 @@ export default class BookDonateScreen extends React.Component{
     
     render(){
         return(
-            <View>
+            <View style={styles.container}>
                 <Text>Book Donate Screen</Text>
 
                 <View>
                     {
                         this.state.requestBookList.length===0
                         ?(
-                            <View>
-                                <Text>List Of All Requested Books</Text>
+                            <View style={styles.container}>
+                                <Text style={styles.container}>List Of All Requested Books</Text>
                             </View>
                         )
                         :(
@@ -71,3 +75,36 @@ export default class BookDonateScreen extends React.Component{
         )
     }
 }
+const styles=StyleSheet.create(
+    {
+        container:{
+            flex:1,
+            backgroundColor:"blue"
+            
+  
+        },
+
+        button:{
+          justifyContent:"center",
+          alignItems:"center",
+          alignSelf:"center",
+          marginTop:44,
+          borderRadius:30,
+          backgroundColor:"blue",
+          elevation:16,
+          shadowColor:"gray",
+          shadowRadius:10,
+          shadowOpacity:0.5,
+          shadowOffset:{width:0,height:8}
+  
+          
+        },
+        books:{
+            justifyContent:"center",
+            alignItems:"center",
+            alignSelf:"center",
+            backgroundColor:"orange"
+        }
+
+    }  
+  )
